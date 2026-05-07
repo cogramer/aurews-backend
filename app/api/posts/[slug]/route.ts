@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/auth";
-
+import { v2 as cloudinary } from 'cloudinary';
 // ==============================
 // 1. GET METHOD (Public)
 // ==============================
@@ -73,16 +73,25 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ s
         if (!tokenUser) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
         const { slug } = await params;
-        
-        const existingPost = await db.post.findUnique({ where: { slug }, select: { authorId: true } });
+
+        const existingPost = await db.post.findUnique({ where: { slug }, select: { authorId: true, thumbnail: true } });
         if (!existingPost) return NextResponse.json({ error: "Post not found" }, { status: 404 });
 
         if (existingPost.authorId !== tokenUser.id && tokenUser.role !== 'ADMIN') {
             return NextResponse.json({ error: "Forbidden: You do not have permission to delete this post" }, { status: 403 });
         }
-
+        if (existingPost.thumbnail && existingPost.thumbnail.includes('cloudinary.com')) {
+            const urlParts = existingPost.thumbnail.split('/');
+            const fileWithExtension = urlParts.slice(-2).join('/');
+            const publicId = fileWithExtension.split('.')[0];
+            try {
+                await cloudinary.uploader.destroy(publicId);
+            } catch (err) {
+                console.error('Failed to delete image from Cloudinary', err);
+            }
+        }
         await db.post.delete({ where: { slug } });
-        
+
         return NextResponse.json({ message: "Post deleted successfully" });
     } catch (error) {
         console.error("Error deleting post: ", error);
