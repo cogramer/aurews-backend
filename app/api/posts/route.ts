@@ -18,9 +18,9 @@ export async function GET(req: NextRequest) {
     const [posts, totalCount] = await Promise.all([
       db.post.findMany({
         where: whereCondition,
-        include: { 
-          category: true, 
-          author: { select: { id: true, name: true, role: true } } 
+        include: {
+          category: true,
+          author: { select: { id: true, name: true, role: true } }
         },
         orderBy: { createdAt: 'desc' },
         skip: skip,
@@ -66,24 +66,26 @@ export async function POST(req: NextRequest) {
 
     // 3. create post
     const post = await db.post.create({
-      data: { 
+      data: {
         title,
         slug,
         content,
         metaDescription,
         thumbnail,
         categoryId: Number(categoryId),
-        authorId: tokenUser.id 
+        authorId: tokenUser.id
       },
       include: {
         category: true,
         author: { select: { id: true, name: true } }
       }
     })
-    
+
     return NextResponse.json(post, { status: 201 })
   } catch (error) {
     console.error('Error creating post:', error)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
+
+

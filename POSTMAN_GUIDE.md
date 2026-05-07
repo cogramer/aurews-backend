@@ -76,8 +76,3 @@ Test fetching posts with pagination and category filters.
 
 ---
 
-## 7. Fetch Categories (`GET /api/categories`)
-- **Method:** `GET`
-- **URL:** `/api/categories`
-- **Auth:** None required.
-- **Action:** Send the request. You should see an array of all available categories for your frontend dropdowns.
