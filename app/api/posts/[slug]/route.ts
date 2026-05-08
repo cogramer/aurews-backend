@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/auth";
 import { v2 as cloudinary } from 'cloudinary';
+import meiliClient from "@/lib/meilisearch";
 // ==============================
 // 1. GET METHOD (Public)
 // ==============================
@@ -54,10 +55,36 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
                 content: body.content,
                 metaDescription: body.metaDescription,
                 thumbnail: body.thumbnail,
-                categoryId: body.categoryId ? Number(body.categoryId) : undefined
+                categoryId: body.categoryId ? Number(body.categoryId) : undefined,
+                status: body.status
+            },
+            include: {
+                category: true,
+                author: {
+                    select: {
+                        name: true,
+                        email: true,
+                        role: true
+                    }
+                }
             }
         });
-
+        try {
+            await meiliClient.index('posts').addDocuments([{
+                id: updatedPost.id,
+                title: updatedPost.title,
+                slug: updatedPost.slug,
+                category: updatedPost.category.name,
+                author: updatedPost.author.name,
+                excerpt: updatedPost.content.substring(0, 200),
+                status: updatedPost.status,
+                thumbnail: updatedPost.thumbnail,
+                createdAt: updatedPost.createdAt,
+                updatedAt: updatedPost.updatedAt
+            }]);
+        } catch (err) {
+            console.error('Failed to update Meilisearch:', err)
+        }
         return NextResponse.json(updatedPost);
     } catch (error) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
@@ -74,7 +101,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ s
 
         const { slug } = await params;
 
-        const existingPost = await db.post.findUnique({ where: { slug }, select: { authorId: true, thumbnail: true } });
+        const existingPost = await db.post.findUnique({ where: { slug }, select: { id: true, authorId: true, thumbnail: true } });
         if (!existingPost) return NextResponse.json({ error: "Post not found" }, { status: 404 });
 
         if (existingPost.authorId !== tokenUser.id && tokenUser.role !== 'ADMIN') {
@@ -91,7 +118,11 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ s
             }
         }
         await db.post.delete({ where: { slug } });
-
+        try {
+            await meiliClient.index('posts').deleteDocument(existingPost.id)
+        } catch (err) {
+            console.error('Failed to delete from Meilisearch:', err)
+        }
         return NextResponse.json({ message: "Post deleted successfully" });
     } catch (error) {
         console.error("Error deleting post: ", error);
