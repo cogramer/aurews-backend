@@ -1,39 +1,30 @@
-import { PrismaClient } from '@prisma/client'
+import { db } from '../lib/db'
 import bcrypt from 'bcryptjs'
 
-const db = new PrismaClient()
-
 async function main() {
-  // 1. Categories 
-  const business = await db.category.upsert({
-    where: { slug: 'business' },
-    update: {},
-    create: { name: 'Business', slug: 'business' }
-  })
+  const categoriesData = [
+    { name: 'Latest', slug: 'latest' },
+    { name: 'Business', slug: 'business' },
+    { name: 'Market', slug: 'market' },
+    { name: 'Technology', slug: 'technology' },
+    { name: 'AI', slug: 'ai' },
+    { name: 'Lifestyle', slug: 'lifestyle' },
+    { name: 'Politics', slug: 'politics' }
+  ];
 
-  const economy = await db.category.upsert({
-    where: { slug: 'economy' },
-    update: {},
-    create: { name: 'Economy', slug: 'economy' }
-  })
+  const categories = await Promise.all(
+    categoriesData.map((cat) => 
+      db.category.upsert({
+        where: { slug: cat.slug },
+        update: {},
+        create: cat
+      })
+    )
+  );
 
-  const tech = await db.category.upsert({
-    where: { slug: 'tech' },
-    update: {},
-    create: { name: 'Tech', slug: 'tech' }
-  })
-
-  const lifestyle = await db.category.upsert({
-    where: { slug: 'lifestyle' },
-    update: {},
-    create: { name: 'Lifestyle', slug: 'lifestyle' }
-  })
-
-  const politics = await db.category.upsert({
-    where: { slug: 'politics' },
-    update: {},
-    create: { name: 'Politics', slug: 'politics' }
-  })
+  // We'll store a reference to the 'Business' and 'Economy' (now Market) categories for our test posts below
+  const business = categories.find(c => c.slug === 'business')!;
+  const economy = categories.find(c => c.slug === 'market')!; // mapping old 'economy' to 'market' for the seed posts
 
   // 2. Users
   const adminPassword = await bcrypt.hash('admin123', 10)

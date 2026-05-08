@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -25,19 +24,28 @@ model Category {
 }
 
 model Post {
-  id         Int      @id @default(autoincrement())
-  title      String
-  content    String
-  thumbnail  String?
-  authorId   Int
-  categoryId Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  author     User     @relation(fields: [authorId], references: [id])
-  category   Category @relation(fields: [categoryId], references: [id])
+  id              Int           @id @default(autoincrement())
+  title           String
+  slug            String        @unique @default(dbgenerated("gen_random_uuid()"))
+  content         String
+  metaDescription String?
+  thumbnail       String?
+  authorId        Int
+  categoryId      Int
+  status          ArticleStatus @default(DRAFT)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  author          User          @relation(fields: [authorId], references: [id])
+  category        Category      @relation(fields: [categoryId], references: [id])
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
