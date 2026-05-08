@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { getUser } from '@/lib/auth'
+import meiliClient from '@/lib/meilisearch'
 
 export async function GET(req: NextRequest) {
   try {
@@ -58,7 +59,7 @@ export async function POST(req: NextRequest) {
 
     // 2. validate body
     const body = await req.json()
-    const { title, slug, content, metaDescription, thumbnail, categoryId } = body
+    const { title, slug, content, metaDescription, thumbnail, categoryId, status = 'DRAFT' } = body
 
     if (!title || !slug || !content || !categoryId) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -73,14 +74,30 @@ export async function POST(req: NextRequest) {
         metaDescription,
         thumbnail,
         categoryId: Number(categoryId),
-        authorId: tokenUser.id
+        authorId: tokenUser.id,
+        status: status
       },
       include: {
         category: true,
         author: { select: { id: true, name: true } }
       }
     })
-
+    try {
+      await meiliClient.index('posts').addDocuments([{
+        id: post.id,
+        title: post.title,
+        slug: post.slug,
+        category: post.category.name,
+        author: post.author.name,
+        excerpt: post.content.substring(0, 200),
+        status: post.status,
+        thumbnail: post.thumbnail,
+        createdAt: post.createdAt,
+        updatedAt: post.updatedAt
+      }]);
+    } catch (err) {
+      console.error('Meilisearch sync Error: ', err)
+    }
     return NextResponse.json(post, { status: 201 })
   } catch (error) {
     console.error('Error creating post:', error)

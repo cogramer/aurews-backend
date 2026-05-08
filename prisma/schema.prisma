@@ -24,18 +24,19 @@ model Category {
 }
 
 model Post {
-  id              Int      @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   title           String
-  slug            String   @unique @default(dbgenerated("gen_random_uuid()"))
+  slug            String        @unique @default(dbgenerated("gen_random_uuid()"))
   content         String
   metaDescription String?
   thumbnail       String?
   authorId        Int
   categoryId      Int
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  author          User     @relation(fields: [authorId], references: [id])
-  category        Category @relation(fields: [categoryId], references: [id])
+  status          ArticleStatus @default(DRAFT)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  author          User          @relation(fields: [authorId], references: [id])
+  category        Category      @relation(fields: [categoryId], references: [id])
 }
 
 enum Role {
