@@ -99,7 +99,7 @@ export default async function Home() {
       {gridPosts.length > 0 && (
         <section className="max-w-[1400px] mx-auto px-4 sm:px-8 py-8 sm:py-12 border-b border-wired-black">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 md:divide-x md:divide-wired-black">
-            {gridPosts.map((post, idx) => (
+            {gridPosts.map((post: any, idx: number) => (
               <article key={post.id} className={`flex flex-col md:px-6 ${idx === 0 ? 'md:pl-0' : ''} ${idx === gridPosts.length - 1 ? 'md:pr-0' : ''}`}>
                 <Link href={`/${post.slug}`} className="group h-full flex flex-col">
                   <div className="relative w-full aspect-4/3 mb-4">
@@ -139,7 +139,7 @@ export default async function Home() {
           <span className="font-mono text-[12px] font-bold uppercase tracking-[1.2px] px-4">Latest</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:divide-x md:divide-wired-black pb-8">
-          {latestPosts.map((post, idx) => (
+          {latestPosts.map((post: any, idx: number) => (
             <article key={post.id} className={`flex flex-col md:px-6 py-4 border-b border-wired-black md:border-b-0 ${idx === 0 ? 'md:pl-0' : ''} ${idx === latestPosts.length - 1 ? 'md:pr-0' : ''}`}>
               <Link href={`/${post.slug}`} className="group">
                 <span className="font-mono text-[11px] font-bold text-wired-black uppercase tracking-[1.1px] mb-1 block">
@@ -182,7 +182,7 @@ export default async function Home() {
             </article>
             {/* 3 Small Posts Right */}
             <div className="flex flex-col divide-y divide-wired-black md:pl-8">
-              {aiPosts.slice(1).map((post) => (
+              {aiPosts.slice(1).map((post: any) => (
                 <article key={post.id} className="py-4 first:pt-0 last:pb-0">
                   <Link href={`/${post.slug}`} className="group flex gap-4">
                     <div className="relative w-24 h-16 shrink-0">
@@ -213,7 +213,7 @@ export default async function Home() {
             <span className="font-mono text-[12px] font-bold uppercase tracking-[1.2px] px-4">Most Popular</span>
           </div>
           <div className="flex flex-col divide-y divide-wired-black pb-8">
-            {popularPosts.map((post, idx) => (
+            {popularPosts.map((post: any, idx: number) => (
               <article key={post.id} className="flex gap-6 items-start py-5 first:pt-0">
                 <span className="font-display text-[48px] leading-none text-hairline shrink-0 w-12 text-center">
                   {String(idx + 1).padStart(2, '0')}

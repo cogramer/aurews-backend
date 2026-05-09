@@ -156,7 +156,7 @@ export default function CreatePostForm({ categories }: { categories: any[] }) {
                         onChange={(e) => setCategoryId(e.target.value)}
                         className="w-full h-12 px-4 border-2 border-wired-black font-sans uppercase text-[14px] outline-none focus:border-link-blue rounded-none bg-white cursor-pointer"
                     >
-                        {categories.map(c => (
+                        {categories.map((c: any) => (
                             <option key={c.id} value={c.id}>{c.name}</option>
                         ))}
                     </select>

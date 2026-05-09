@@ -89,7 +89,7 @@ export default function WriteDashboard() {
                             You haven't published any stories yet.
                         </p>
                     ) : (
-                        posts.map((post) => (
+                        posts.map((post: any) => (
                             <div key={post.id} className="py-6 flex justify-between items-center group">
                                 <div className="flex-1">
                                     <span className="font-mono text-[10px] uppercase tracking-wider text-link-blue">

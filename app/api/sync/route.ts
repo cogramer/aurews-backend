@@ -13,7 +13,7 @@ export async function GET() {
         if (!allPosts) {
             return NextResponse.json({ error: 'Sync failed' }, { status: 500 });
         }
-        const formattedPosts = allPosts.map(post => ({
+        const formattedPosts = allPosts.map((post: any) => ({
             id: post.id,
             title: post.title,
             slug: post.slug,

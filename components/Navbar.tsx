@@ -43,7 +43,7 @@ export default function Navbar() {
             {/* Categories Navigation */}
             <nav className="w-full bg-white border-wired-black">
                 <ul className="flex items-center justify-center overflow-x-auto gap-1 sm:gap-2 px-2 no-scrollbar">
-                    {categories.map((cat) => {
+                    {categories.map((cat: any) => {
                         const isActive = pathname === cat.href;
                         return (
                             <li key={cat.name}>

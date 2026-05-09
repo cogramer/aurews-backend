@@ -75,7 +75,7 @@ export default function MobileMenu() {
 
                 {/* Category Links */}
                 <nav className="flex flex-col flex-1 overflow-y-auto py-4">
-                    {categories.map((cat) => (
+                    {categories.map((cat: any) => (
                         <Link
                             key={cat.name}
                             href={cat.href}
