@@ -12,14 +12,28 @@ export async function POST(req: NextRequest) {
         const file = formData.get('file') as File;
         if (!file) return NextResponse.json({ error: 'No file provided' }, { status: 400 });
         // 3. Enforce strict AVIF / WebP types
-        if (file.type !== 'image/webp' && file.type !== 'image/avif') return NextResponse.json({ error: 'Invalid file type. Please upload an AVIF or WebP image.' }, { status: 400 });
+        const allowedTypes = ["image/webp", "image/avif"];
+        if (!allowedTypes.includes(file.type)) {
+            return NextResponse.json(
+                { error: "Only WebP and AVIF images are accepted." },
+                { status: 400 }
+            );
+        }
+        const outputFormat = file.type === "image/avif" ? "avif" : "webp";
         // 4. Convert file to buffer for cloudinary
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         // 5. Upload to cloudinary using a stream
         const uploadResult: any = await new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
-                { folder: 'aures_thumbnails' },
+                {
+                    folder: "aures_thumbnails",
+                    format: outputFormat,              // force output format to WebP
+                    transformation: [
+                        { quality: "auto:best" },
+                        { fetch_format: "auto" }
+                    ]
+                },
                 (error, result) => {
                     if (error) reject(error);
                     else resolve(result);

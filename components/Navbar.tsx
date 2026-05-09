@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import MobileMenu from './MobileMenu';
+import NavbarAuth from './NavbarAuth';
+
 
 export default function Navbar() {
     const categories = [
@@ -18,11 +21,7 @@ export default function Navbar() {
             <div className="w-full bg-wired-black text-paper-white h-10 flex items-center justify-between px-4 sm:px-8">
                 <div className="flex gap-6 items-center">
                     {/* Hamburger Icon */}
-                    <button className="flex flex-col justify-center gap-[3px] w-5 h-4 hover:opacity-70 transition-opacity">
-                        <span className="block w-full h-[2px] bg-paper-white"></span>
-                        <span className="block w-full h-[2px] bg-paper-white"></span>
-                        <span className="block w-full h-[2px] bg-paper-white"></span>
-                    </button>
+                    <MobileMenu />
                     <Link href="/search" className="font-mono text-[12px] uppercase tracking-[1.2px] hover:text-link-blue transition-colors max-sm:hidden">
                         Search
                     </Link>
@@ -35,9 +34,7 @@ export default function Navbar() {
                     <Link href="/subscribe" className="font-mono text-[12px] font-bold uppercase tracking-[1.2px] hover:text-link-blue transition-colors">
                         Subscribe
                     </Link>
-                    <Link href="/login" className="font-mono text-[12px] uppercase tracking-[1.2px] hover:text-link-blue transition-colors max-sm:hidden">
-                        Sign In
-                    </Link>
+                    <NavbarAuth />
                 </div>
             </div>
 
