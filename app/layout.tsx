@@ -42,6 +42,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const runtime = "edge";
+
 // WiredDisplay substitute
 const playfair = Playfair_Display({
   subsets: ["latin"],
