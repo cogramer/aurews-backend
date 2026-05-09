@@ -1,9 +1,8 @@
 
 import { notFound } from "next/navigation";
-import { db } from "@/lib/db";
 import type { Metadata } from "next";
 import PostGrid from "@/components/PostGrid";
-
+export const revalidate = 3600; // Cache for 1 hour
 export async function generateMetadata(
     { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
@@ -28,7 +27,7 @@ export default async function CategoryPage(
 
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/posts?category=${slug}&limit=9&page=1`,
-        { cache: "no-store" }
+        { next: { revalidate: 3600 } }
     );
     const data = await res.json();
     const posts = data.data;
