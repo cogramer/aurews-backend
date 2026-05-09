@@ -12,10 +12,10 @@ export async function generateMetadata(
         { cache: "force-cache" }
     );
     const data = await res.json();
-    if (!data.data || data.data.length === 0) return { title: "Not Found | Aurews" };
+    if (!data.data || data.data.length === 0) return { title: "Not Found" };
     const categoryName = data.data[0].category.name;
     return {
-        title: `${categoryName} | Aurews`,
+        title: `${categoryName}`,
         description: `Latest stories in ${categoryName} from Aurews.`,
     };
 }

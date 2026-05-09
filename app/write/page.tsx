@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
 // Types for our data
 type User = { id: number; name: string; email: string; role: string };
 type Post = { id: number; title: string; slug: string; status: string; category: { name: string }; createdAt: string };
@@ -25,7 +24,7 @@ export default function WriteDashboard() {
             try {
                 const [userRes, postsRes] = await Promise.all([
                     fetch("/api/me", { headers: { Authorization: `Bearer ${token}` } }),
-                    fetch("/api/posts?limit=50", { headers: { Authorization: `Bearer ${token}` } })
+                    fetch("/api/me/posts", { headers: { Authorization: `Bearer ${token}` } })
                 ]);
 
                 if (!userRes.ok) throw new Error("Unauthorized");

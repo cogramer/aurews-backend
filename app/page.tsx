@@ -114,9 +114,9 @@ export default async function Home() {
                   <span className="font-mono text-[12px] font-bold text-wired-black uppercase tracking-[1.1px] mb-2">
                     {post.category.name}
                   </span>
-                  <h2 className="font-display text-[26px] leading-[1.08] text-page-ink group-hover:text-link-blue transition-colors mb-3">
+                  <h3 className="font-display text-[26px] leading-[1.08] text-page-ink group-hover:text-link-blue transition-colors mb-3">
                     {post.title}
-                  </h2>
+                  </h3>
                   {post.metaDescription && (
                     <p className="font-body text-[16px] leading-normal text-page-ink mb-4 line-clamp-2">
                       {post.metaDescription}
@@ -145,9 +145,9 @@ export default async function Home() {
                 <span className="font-mono text-[11px] font-bold text-wired-black uppercase tracking-[1.1px] mb-1 block">
                   {post.category.name}
                 </span>
-                <h2 className="font-display text-[22px] leading-[1.12] text-page-ink group-hover:text-link-blue transition-colors">
+                <h3 className="font-display text-[22px] leading-[1.12] text-page-ink group-hover:text-link-blue transition-colors">
                   {post.title}
-                </h2>
+                </h3>
               </Link>
             </article>
           ))}
@@ -222,9 +222,9 @@ export default async function Home() {
                   <span className="font-mono text-[11px] font-bold text-wired-black uppercase tracking-[1.1px] mb-1 block">
                     {post.category.name}
                   </span>
-                  <h2 className="font-display text-[22px] leading-[1.1] text-page-ink group-hover:text-link-blue transition-colors">
+                  <h3 className="font-display text-[22px] leading-[1.1] text-page-ink group-hover:text-link-blue transition-colors">
                     {post.title}
-                  </h2>
+                  </h3>
                 </Link>
               </article>
             ))}

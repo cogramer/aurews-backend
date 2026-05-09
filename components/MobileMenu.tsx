@@ -105,11 +105,16 @@ export default function MobileMenu() {
                             </button>
                         </>
                     ) : (
-                        <Link href="/login" onClick={() => setOpen(false)} className="font-mono text-[12px] uppercase tracking-[1.2px] text-[#999] hover:text-link-blue transition-colors">
-                            Sign In
-                        </Link>
+                        <>
+                            <Link href="/login" onClick={() => setOpen(false)} className="font-mono text-[12px] uppercase tracking-[1.2px] text-[#999] hover:text-link-blue transition-colors cursor-pointer">
+                                Sign In
+                            </Link>
+                            <Link href="/register" onClick={() => setOpen(false)} className="font-mono text-[12px] uppercase tracking-[1.2px] text-[#999] hover:text-link-blue transition-colors cursor-pointer">
+                                Register
+                            </Link>
+                        </>
                     )}
-                    <Link href="/subscribe" onClick={() => setOpen(false)} className="font-mono text-[12px] font-bold uppercase tracking-[1.2px] text-paper-white hover:text-link-blue transition-colors">
+                    <Link href="https://www.facebook.com/profile.php?id=61589167535017" onClick={() => setOpen(false)} className="font-mono text-[12px] font-bold uppercase tracking-[1.2px] text-paper-white hover:text-link-blue transition-colors" target="_blank">
                         Subscribe
                     </Link>
                 </div>

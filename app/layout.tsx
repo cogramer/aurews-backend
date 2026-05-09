@@ -11,13 +11,14 @@ export const metadata: Metadata = {
   },
   description: "Aurews covers the latest in technology, business, artificial intelligence, markets, and lifestyle. Stay informed with in-depth reporting.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://aurews.id.vn"), // your production domain
+
   openGraph: {
     siteName: "Aurews",
     type: "website",
     locale: "en_US",
     url: "https://aurews.id.vn",
     title: "Aurews — Tech, Business & Innovation News",
-    description: "...",
+    description: "Stay informed with the latest in technology, business, artificial intelligence, and innovation from Aurews.",
     images: [
       {
         url: "https://res.cloudinary.com/docpflk0p/image/upload/v1778279272/aures_thumbnails/ptf5iqkxvv9dyeeiysjb.jpg",

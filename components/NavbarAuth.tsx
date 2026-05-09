@@ -38,8 +38,20 @@ export default function NavbarAuth() {
     }
 
     return (
-        <Link href="/login" className="font-mono text-[12px] uppercase tracking-[1.2px] hover:text-link-blue transition-colors max-sm:hidden">
-            Sign In
-        </Link>
+        <div className="flex items-center gap-4">
+            <Link
+                href="/login"
+                className="font-mono text-[12px] uppercase tracking-[1.2px] hover:text-link-blue transition-colors cursor-pointer"
+            >
+                Sign In
+            </Link>
+            {/* ADD THIS REGISTER LINK */}
+            <Link
+                href="/register"
+                className="font-mono text-[12px] uppercase tracking-[1.2px] border-2 border-wired-black px-3 py-1 hover:bg-wired-black hover:text-paper-white transition-colors cursor-pointer"
+            >
+                Join us
+            </Link>
+        </div>
     );
 }

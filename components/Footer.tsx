@@ -28,7 +28,7 @@ export default function Footer() {
                 { name: "About", href: "/about" },
                 { name: "Contact", href: "/contact" },
                 { name: "Newsletters", href: "/newsletter" },
-                { name: "Subscribe", href: "/subscribe" },
+                { name: "Subscribe", href: "https://www.facebook.com/profile.php?id=61589167535017" },
             ],
         },
     ];
@@ -83,6 +83,7 @@ export default function Footer() {
                                         <Link
                                             href={link.href}
                                             className="font-sans text-[13px] text-[#bbb] hover:text-link-blue transition-colors"
+                                            target="_blank"
                                         >
                                             {link.name}
                                         </Link>
@@ -103,7 +104,7 @@ export default function Footer() {
                             Privacy Policy
                         </Link>
                         <Link href="/terms" className="font-sans text-[12px] text-[#666] hover:text-link-blue transition-colors">
-                            Terms of Use
+                            Terms of Service
                         </Link>
                     </div>
                 </div>

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     });
 
     if (!post) {
-        return { title: "Post not found", description: "The page you are looking for does not exist" }
+        return { title: "Page not found", description: "The page you are looking for does not exist" }
     }
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://aurews.id.vn";
     return {

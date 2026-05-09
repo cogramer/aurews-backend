@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Search | Aurews",
+    title: "Search",
     description: "Search all stories on Aurews.",
 };
 
